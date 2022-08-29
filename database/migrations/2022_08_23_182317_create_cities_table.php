@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('flights_arriving');
-            $table->integer('flights_departure');
             $table->timestamps();
         });
     }
