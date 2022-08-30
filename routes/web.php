@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CityController;
+use App\Models\City;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/cityAdmin', function () {
-    return view('CitiesAdmin');
-});
+
+Route::resource('cityAdmin', CityController::class);
+
+
