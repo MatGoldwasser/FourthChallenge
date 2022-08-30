@@ -9,6 +9,8 @@ class City extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function flights_arriving()
     {
         return $this->hasMany(Flight::class);
@@ -19,7 +21,7 @@ class City extends Model
         return $this->hasMany(Flight::class);
     }
 
-    public function airline()
+    public function airlines()
     {
         return $this->hasMany(City::class);
     }
