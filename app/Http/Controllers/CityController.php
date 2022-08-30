@@ -37,8 +37,9 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
+
         $name = request()->validate([
-            'name' => 'required'
+            'name' => 'required|unique:cities,name'
         ]);
 
         City::create($name);
