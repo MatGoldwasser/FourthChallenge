@@ -11,7 +11,7 @@ class City extends Model
 
     protected $fillable = ['name'];
 
-    public function flights_arriving()
+    /*public function flights_arriving()
     {
         return $this->hasMany(Flight::class);
     }
@@ -25,4 +25,5 @@ class City extends Model
     {
         return $this->hasMany(City::class);
     }
+    */
 }

@@ -8,54 +8,73 @@
     <title>Document</title>
 </head>
 <body>
-<table class = 'bg-red-500'>
+<div class="px-4">
+    <table class = 'bg-red-200 px-4'>
 
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Cantidad de Vuelos que llegan</th>
-        <th>Cantidad de Vuelos que salen</th>
-
-        <td>
-            <button name="Editar" type="button">
-                Editar
-            </button>
-        </td>
-    </tr>
-
-    @foreach($cities as $city)
-        <tr>
-            <td>{{$city->id}}</td>
-            <td>{{$city->name}}</td>
-            <td>Aca tengo que mostrar cantidad de vuelos que llegan</td>
-            <td>Aca tengo que mostrar cantidad de vuelos que salen</td>
-            @endforeach
-
-            <td>
-                <button name="Eliminar" type="button">
-                    Eliminar
-                </button>
-            </td>
-
+        <tr class="border-2 border-black">
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cantidad de Vuelos que llegan</th>
+            <th>Cantidad de Vuelos que salen</th>
+            <th>Editar o eliminar ciudad</th>
         </tr>
-</table>
 
-<h2>Agregar una nueva ciudad</h2>
+        @foreach($cities as $city)
+            <tr>
+                <td>{{$city->id}}</td>
+                <form method='GET' action="/cities/{{$city->id}}/edit"> <!-- tengo que hacer que cuando haga click le saque el readonly y le haga un post del nombre para editar -->
+                    <td>
+                        <input type="text" id="{{$city->name}}" name="name" value="{{$city->name}}" class="bg-red-200" readonly>
 
-<form method="POST" action="/cityAdmin">
+                        <button type="submit" id="{{$city->id}}" class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600" hidden>
+                            Submit
+                        </button>
+                    </td>
+                </form>
+                <td>Aca tengo que mostrar cantidad de vuelos que llegan</td>
+                <td>Aca tengo que mostrar cantidad de vuelos que salen</td>
+                <td class="px-6">
+                    <form method='POST' action="/cities/{{$city->id}}">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" id="{{$city->id}}" class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+                            Eliminar
+                        </button>
+                    </form>
+
+                    <button name="Editar" type="button" onclick="editarNombre()" id="{{$city->id}}" class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+                        Editar
+                    </button><br><br>
+
+
+                </td>
+                @endforeach
+                <script>
+                    function editarNombre(){
+                        document.getElementById("{{$city->id}}").hidden = false;
+                        document.getElementById("{{$city->name}}").readOnly = false;
+                    }
+
+                </script>
+            </tr>
+    </table><br><br>
+
+
+<h1>Agregar una nueva ciudad</h1><br>
+
+<form method="POST" action="/cities">
     @csrf
 
-
-
-    <label for="name">Name</label><br>
-    <input type="text" id="name" name="name"><br><br>
-    <input type="submit" value="Submit">
+    <label for="name">Nombre</label><br>
+    <input type="text" id="name" name="name" class="border-2 border-black"><br><br>
+    <input type="submit" value="Submit" class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
 
     @error("name")
-    <strong>No se puede dejar el nombre vacio</strong>
+    <strong>No se puede dejar el nombre vacio ni introducir un nombre ya existente</strong>
     @enderror
 
 </form>
+</div>
 </body>
 </html>
 

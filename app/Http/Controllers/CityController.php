@@ -37,13 +37,12 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-
         $name = request()->validate([
             'name' => 'required|unique:cities,name'
         ]);
 
         City::create($name);
-        return redirect('/cityAdmin')->with('success', 'The city has been added');
+        return redirect('/cities')->with('success', 'The city has been added');
     }
 
     /**
@@ -54,7 +53,7 @@ class CityController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -86,8 +85,9 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(City $city)
     {
-        //
+        $city->delete();
+        return redirect('/cities')->with('success', 'The city has been deleted');
     }
 }

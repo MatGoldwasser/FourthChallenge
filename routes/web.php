@@ -20,6 +20,6 @@ Route::get('/', function () {
 });
 
 
-Route::resource('cityAdmin', CityController::class);
+Route::resource('cities', CityController::class);
 
 Route::resource('airlines', AirlineController::class);
