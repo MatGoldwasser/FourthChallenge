@@ -15,7 +15,7 @@ class CityController extends Controller
     public function index()
     {
         return view('CitiesAdmin',[
-            'cities' => City::all()
+            'cities' => City::paginate()
         ]);
     }
 
