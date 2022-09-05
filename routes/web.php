@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AirlineController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,5 @@ Route::get('/', function () {
 Route::get('/cityAdmin', function () {
     return view('CitiesAdmin');
 });
+
+Route::resource('airlines', AirlineController::class);
