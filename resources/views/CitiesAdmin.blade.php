@@ -22,11 +22,13 @@
         @foreach($cities as $city)
             <tr>
                 <td>{{$city->id}}</td>
-                <form method='GET' action="/cities/{{$city->id}}/edit"> <!-- tengo que hacer que cuando haga click le saque el readonly y le haga un post del nombre para editar -->
+                <form method='POST' action="/cities/{{$city->id}}"> <!-- tengo que hacer que cuando haga click le saque el readonly y le haga un post del nombre para editar -->
+                    @csrf
+                    @method('PUT')
                     <td>
-                        <input type="text" id="{{$city->name}}" name="name" value="{{$city->name}}" class="bg-red-200" readonly>
+                        <input type="text" id="input-{{$loop->index}}" name="name" value="{{$city->name}}" class="bg-red-200" readonly> <!-- readonly -->
 
-                        <button type="submit" id="{{$city->id}}" class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600" hidden>
+                        <button type="submit" id="button-{{$loop->index}}" class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600" hidden> <!-- hidden -->
                             Submit
                         </button>
                     </td>
@@ -37,25 +39,25 @@
                     <form method='POST' action="/cities/{{$city->id}}">
                         @method('DELETE')
                         @csrf
-                        <button type="button" id="{{$city->id}}" class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+                        <button type="submit" id="{{$city->id}}" class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
                             Eliminar
                         </button>
                     </form>
 
-                    <button name="Editar" type="button" onclick="editarNombre()" id="{{$city->id}}" class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+                    <button name="Editar" type="button" onclick="editarNombre({{$loop->index}})" id="{{$city->id}}" class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
                         Editar
                     </button><br><br>
 
 
                 </td>
-                @endforeach
                 <script>
-                    function editarNombre(){
-                        document.getElementById("{{$city->id}}").hidden = false;
-                        document.getElementById("{{$city->name}}").readOnly = false;
+                    function editarNombre(fila){
+                        document.getElementById(`button-${fila}`).hidden = false;
+                        document.getElementById(`input-${fila}`).readOnly = false;
                     }
-
                 </script>
+                @endforeach
+
             </tr>
     </table><br><br>
 
