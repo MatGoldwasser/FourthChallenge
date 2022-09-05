@@ -76,11 +76,14 @@ class CityController extends Controller
      */
     public function update(City $city, Request $request)
     {
-        $name = $request->validate([
+        $request->validate([
             'name' => 'required|unique:cities,name'
         ]);
-        $name = $name['name']; //porque el validate te devuelve un array clave-valor
-        $city->update(['name' => $name]);
+
+        $city->update([
+            'name' => $request->input('name')
+        ]);
+
         return redirect('/cities')->with('success', 'The city has been edited');
     }
 
