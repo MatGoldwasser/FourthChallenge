@@ -17,6 +17,7 @@
             <th>Nombre</th>
             <th>Descripcion</th>
             <th>Cantidad de Vuelos</th>
+            <th>Editar o eliminar aerolinea</th>
         </tr>
 
         @foreach($airlines as $airline)
@@ -25,6 +26,18 @@
                     <td>{{$airline->name}}</td>
                     <td>{{$airline->description}}</td>
                     <td class="text-center">{{$airline->number_of_flights}}</td>
+
+                    <td class="px-6">
+                        <form method='POST' action="/airlines/{{$airline->id}}">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" id="{{$airline->id}}"
+                                    class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+
                     @endforeach
                 </tr>
 
