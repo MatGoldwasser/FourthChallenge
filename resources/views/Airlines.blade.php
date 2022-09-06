@@ -20,14 +20,14 @@
         </tr>
 
         @foreach($airlines as $airline)
-            <tr>
-                <td>{{$airline->id}}</td>
-                <td>{{$airline->name}}</td>
-                <td>{{$airline->description}}</td>
-                <td>{{$airline->number_of_flights}}</td>
-        @endforeach
+                <tr>
+                    <td>{{$airline->id}}</td>
+                    <td>{{$airline->name}}</td>
+                    <td>{{$airline->description}}</td>
+                    <td class="text-center">{{$airline->number_of_flights}}</td>
+                    @endforeach
+                </tr>
 
-            </tr>
 
     </table><br><br>
     {{ $airlines->links() }}
