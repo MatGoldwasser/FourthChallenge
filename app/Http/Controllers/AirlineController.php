@@ -87,8 +87,9 @@ class AirlineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Airline $airline)
     {
-        //
+        $airline->delete();
+        return redirect('/airlines')->with('success', 'The city has been deleted');
     }
 }
