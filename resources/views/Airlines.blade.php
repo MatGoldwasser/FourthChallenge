@@ -28,9 +28,30 @@
                     @endforeach
                 </tr>
 
+    </table><br>
 
-    </table><br><br>
+
     {{ $airlines->links() }}
+
+    <h1 class="text-4xl">Agregar una nueva aerolinea</h1><br>
+
+    <form method="POST" action="/airlines">
+        @csrf
+
+        <label for="name">Nombre</label><br>
+        <input type="text" id="name" name="name" class="border-2 border-black"><br><br>
+
+        <label for="description">Descripcion</label><br>
+        <input type="text" id="description" name="description" class="border-2 border-black"><br><br>
+
+        <input type="submit" value="Submit"
+               class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+
+        @error("name")
+        <strong>No se puede dejar el nombre vacio ni introducir un nombre ya existente</strong>
+        @enderror
+
+    </form>
 </div>
 </body>
 </html>
