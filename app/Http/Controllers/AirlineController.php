@@ -37,12 +37,12 @@ class AirlineController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->validate([
+        $attributes = $request->validate([
             'name' => 'required|unique:airlines,name',
             'description' => 'required|unique:airlines,description'
         ]);
 
-        Airline::create($name);
+        Airline::create($attributes);
 
         return redirect('/airlines')->with('success', 'The city has been added');
     }
