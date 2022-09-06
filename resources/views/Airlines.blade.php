@@ -15,19 +15,21 @@
         <tr class="border-2 border-black">
             <th>ID</th>
             <th>Nombre</th>
-            <th>Cantidad de Vuelos que llegan</th>
-            <th>Cantidad de Vuelos que salen</th>
-            <th>Editar o eliminar ciudad</th>
+            <th>Descripcion</th>
+            <th>Cantidad de Vuelos</th>
         </tr>
 
-        <tr>
-            <th>Prueba</th>
-            <th>Prueba</th>
-            <th>Prueba</th>
-            <th>Prueba</th>
-            <th>Prueba</th>
-        </tr>
+        @foreach($airlines as $airline)
+            <tr>
+                <td>{{$airline->id}}</td>
+                <td>{{$airline->name}}</td>
+                <td>{{$airline->description}}</td>
+                <td>{{$airline->number_of_flights}}</td>
+        @endforeach
+
+            </tr>
 
     </table>
+</div>
 </body>
 </html>
