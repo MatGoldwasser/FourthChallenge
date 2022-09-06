@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\CityController;
-use App\Models\City;
 use Illuminate\Support\Facades\Route;
 
 /*
