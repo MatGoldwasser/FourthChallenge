@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Airline;
 use Illuminate\Http\Request;
 
 class AirlineController extends Controller
@@ -13,7 +14,7 @@ class AirlineController extends Controller
      */
     public function index()
     {
-        return view('AirlinesAdmin',[
+        return view('Airlines',[
             'airlines' => Airline::all()
         ]);
     }
