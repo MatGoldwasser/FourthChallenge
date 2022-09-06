@@ -29,7 +29,8 @@
 
             </tr>
 
-    </table>
+    </table><br><br>
+    {{ $airlines->links() }}
 </div>
 </body>
 </html>
