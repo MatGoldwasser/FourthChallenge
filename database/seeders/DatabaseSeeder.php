@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\City;
 use App\Models\Airline;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        City::factory()->count(100)->create();
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

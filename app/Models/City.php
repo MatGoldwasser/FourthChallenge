@@ -9,18 +9,6 @@ class City extends Model
 {
     use HasFactory;
 
-    public function flights_arriving()
-    {
-        return $this->hasMany(Flight::class);
-    }
+    protected $fillable = ['name'];
 
-    public function flights_departure()
-    {
-        return $this->hasMany(Flight::class);
-    }
-
-    public function airline()
-    {
-        return $this->hasMany(City::class);
-    }
 }
