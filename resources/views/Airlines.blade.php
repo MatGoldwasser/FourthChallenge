@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<div class="px-4">
+<div class="px-6">
     <table class='bg-red-200 px-4'>
 
         <tr class="border-2 border-black">
@@ -17,16 +17,34 @@
             <th>Nombre</th>
             <th>Descripcion</th>
             <th>Cantidad de Vuelos</th>
-            <th>Eliminar aerolinea</th>
-            <th>Editar aerolinea</th>
+            <th></th>
+            <th></th>
         </tr>
 
         @foreach($airlines as $airline)
             <tr>
                 <td>
                     <td>{{$airline->id}}</td>
-                    <td>{{$airline->name}}</td>
-                    <td>{{$airline->description}}</td>
+
+                    <form method='POST' action="/cities/{{$airline->id}}">
+                        @csrf
+                        @method('PUT')
+                        <td>
+                            <input type="text" id="name-{{$loop->index}}" name="name" value="{{$airline->name}}"
+                                   class="bg-red-200" readonly>
+
+                            <input id="description-{{$loop->index}}" name="name" value="{{$airline->description}}"
+                                   class="bg-red-200" readonly>
+
+                            <button type="submit" id="button-{{$loop->index}}"
+                                    class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600"
+                                    >
+                                Submit
+                            </button>
+                        </td>
+                    </form>
+
+
                     <td class="text-center">{{$airline->number_of_flights}}</td>
 
                     <td>
