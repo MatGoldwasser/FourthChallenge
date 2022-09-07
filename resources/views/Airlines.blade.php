@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<div class="px-4">
+<div class="px-6">
     <table class='bg-red-200 px-4'>
 
         <tr class="border-2 border-black">
@@ -17,17 +17,37 @@
             <th>Nombre</th>
             <th>Descripcion</th>
             <th>Cantidad de Vuelos</th>
-            <th>Editar o eliminar aerolinea</th>
+            <th></th>
+            <th></th>
         </tr>
 
         @foreach($airlines as $airline)
-                <tr>
+            <tr>
+                <td>
                     <td>{{$airline->id}}</td>
-                    <td>{{$airline->name}}</td>
-                    <td>{{$airline->description}}</td>
+
+                    <form method='POST' action="/airlines/{{$airline->id}}">
+                        @csrf
+                        @method('PUT')
+                        <td>
+                            <input type="text" id="name-{{$loop->index}}" name="name" value="{{$airline->name}}"
+                                   class="bg-red-200" readonly>
+
+                            <input id="description-{{$loop->index}}" name="description" value="{{$airline->description}}"
+                                   class="bg-red-200" readonly>
+
+                            <button type="submit" id="button-{{$loop->index}}"
+                                    class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600"
+                                    hidden>
+                                Submit
+                            </button>
+                        </td>
+                    </form>
+
+
                     <td class="text-center">{{$airline->number_of_flights}}</td>
 
-                    <td class="px-6">
+                    <td>
                         <form method='POST' action="/airlines/{{$airline->id}}">
                             @method('DELETE')
                             @csrf
@@ -38,9 +58,22 @@
                         </form>
                     </td>
 
+                    <td>
+                        <button name="Editar" type="button" onclick="editarNombreDescripcion({{$loop->index}})" id="{{$airline->id}}"
+                                class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+                            Editar
+                        </button>
+                    </td>
+
+                    <script>
+                        function editarNombreDescripcion(fila) {
+                            document.getElementById(`button-${fila}`).hidden = false;
+                            document.getElementById(`description-${fila}`).readOnly = false;
+                            document.getElementById(`name-${fila}`).readOnly = false;
+                        }
+                    </script>
                     @endforeach
                 </tr>
-
     </table><br>
 
 
