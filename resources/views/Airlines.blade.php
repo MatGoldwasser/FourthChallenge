@@ -38,7 +38,7 @@
 
                             <button type="submit" id="button-{{$loop->index}}"
                                     class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600"
-                                    >
+                                    hidden>
                                 Submit
                             </button>
                         </td>
@@ -59,11 +59,19 @@
                     </td>
 
                     <td>
-                        <button name="Editar" type="button"
+                        <button name="Editar" type="button" onclick="editarNombreDescripcion({{$loop->index}})" id="{{$airline->id}}"
                                 class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
                             Editar
                         </button>
                     </td>
+
+                    <script>
+                        function editarNombreDescripcion(fila) {
+                            document.getElementById(`button-${fila}`).hidden = false;
+                            document.getElementById(`description-${fila}`).readOnly = false;
+                            document.getElementById(`name-${fila}`).readOnly = false;
+                        }
+                    </script>
                     @endforeach
                 </tr>
     </table><br>
