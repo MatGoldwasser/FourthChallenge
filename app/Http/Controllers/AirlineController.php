@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Airline;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AirlineController extends Controller
 {
@@ -40,7 +41,7 @@ class AirlineController extends Controller
     {
         $attributes = $request->validate([
             'name' => 'required|unique:airlines,name',
-            'description' => 'required|unique:airlines,description'
+            'description' => 'required'
         ]);
 
         Airline::create($attributes);
@@ -80,8 +81,8 @@ class AirlineController extends Controller
     public function update(Airline $airline, Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|unique:airlines,name',
-            'description' => 'required|unique:airlines,description'
+            'name' => ['required', Rule::unique('airlines','name')->ignore($airline)],
+            'description' => ['required']
         ]);
 
         $airline->update([
