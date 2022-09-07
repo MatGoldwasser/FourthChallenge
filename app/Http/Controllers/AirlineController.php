@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Airline;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AirlineController extends Controller
@@ -76,9 +77,19 @@ class AirlineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Airline $airline, Request $request): RedirectResponse
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:airlines,name',
+            'description' => 'required|unique:airlines,description'
+        ]);
+
+        $airline->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description')
+        ]);
+
+        return redirect('/airlines')->with('success', 'The city has been edited');
     }
 
     /**

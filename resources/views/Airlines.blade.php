@@ -26,14 +26,14 @@
                 <td>
                     <td>{{$airline->id}}</td>
 
-                    <form method='POST' action="/cities/{{$airline->id}}">
+                    <form method='POST' action="/airlines/{{$airline->id}}">
                         @csrf
                         @method('PUT')
                         <td>
                             <input type="text" id="name-{{$loop->index}}" name="name" value="{{$airline->name}}"
                                    class="bg-red-200" readonly>
 
-                            <input id="description-{{$loop->index}}" name="name" value="{{$airline->description}}"
+                            <input id="description-{{$loop->index}}" name="description" value="{{$airline->description}}"
                                    class="bg-red-200" readonly>
 
                             <button type="submit" id="button-{{$loop->index}}"
