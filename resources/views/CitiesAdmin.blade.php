@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
         </tr>
 
         @foreach($cities as $city)
-            <tr>
+            <tr id="city-{{$city->id}}">
                 <td>{{$city->id}}</td>
                 <form method='POST' action="/cities/{{$city->id}}">
                     <!-- tengo que hacer que cuando haga click le saque el readonly y le haga un post del nombre para editar -->
@@ -40,14 +41,11 @@
                 <td>Aca tengo que mostrar cantidad de vuelos que llegan</td>
                 <td>Aca tengo que mostrar cantidad de vuelos que salen</td>
                 <td class="px-6">
-                    <form method='POST' action="/cities/{{$city->id}}">
-                        @method('DELETE')
-                        @csrf
-                        <button type="submit" id="{{$city->id}}"
-                                class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+
+                        <button type="submit" id="delete-button-{{$city->id}}"
+                                class="onDelete bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
                             Eliminar
                         </button>
-                    </form>
 
                     <button name="Editar" type="button" onclick="editarNombre({{$loop->index}})" id="{{$city->id}}"
                             class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
@@ -57,12 +55,6 @@
 
 
                 </td>
-                <script>
-                    function editarNombre(fila) {
-                        document.getElementById(`button-${fila}`).hidden = false;
-                        document.getElementById(`input-${fila}`).readOnly = false;
-                    }
-                </script>
                 @endforeach
 
             </tr>
@@ -90,6 +82,26 @@
     </form>
 </div>
 </body>
+
+<script>
+    $(document).ready(function () {
+        $(".onDelete").click(function (e) {
+            const id = (this.id).split('-')[2];
+            const pet = `/cities/${id}`;
+            e.preventDefault();
+            $.ajax({
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                url: pet,
+                type: 'delete',
+                success: function(){
+                    $(`#city-${id}`).remove()
+                }
+            })
+        });
+    });
+</script>
 </html>
 
 

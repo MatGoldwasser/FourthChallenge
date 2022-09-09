@@ -50,6 +50,6 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         $city->delete();
-        return redirect('/cities')->with('success', 'The city has been deleted');
+        return response()->json(['respuesta'=>0]);
     }
 }
