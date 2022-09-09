@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
         </tr>
 
         @foreach($airlines as $airline)
-            <tr>
+            <tr id="airline-{{$airline->id}}">
                 <td>
                     <td>{{$airline->id}}</td>
 
@@ -48,33 +49,22 @@
                     <td class="text-center">{{$airline->number_of_flights}}</td>
 
                     <td>
-                        <form method='POST' action="/airlines/{{$airline->id}}">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" id="{{$airline->id}}"
-                                    class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
-                                Eliminar
-                            </button>
-                        </form>
+                        <button type="submit" id="delete-button-{{$airline->id}}"
+                                class="onDelete bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
+                            Eliminar
+                        </button>
                     </td>
 
                     <td>
-                        <button name="Editar" type="button" onclick="editarNombreDescripcion({{$loop->index}})" id="{{$airline->id}}"
+                        <button name="Editar" type="button"  id="edit-button-{{$airline->id}}"
                                 class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
                             Editar
                         </button>
                     </td>
-
-                    <script>
-                        function editarNombreDescripcion(fila) {
-                            document.getElementById(`button-${fila}`).hidden = false;
-                            document.getElementById(`description-${fila}`).readOnly = false;
-                            document.getElementById(`name-${fila}`).readOnly = false;
-                        }
-                    </script>
-                    @endforeach
+        @endforeach
                 </tr>
     </table><br>
+
 
 
     {{ $airlines->links() }}
@@ -100,4 +90,26 @@
     </form>
 </div>
 </body>
+
+<script>
+
+    $(document).ready(function () {
+        $(".onDelete").click(function (e) {
+            const id = (this.id).split('-')[2];
+            const pet = `/airlines/${id}`;
+            e.preventDefault();
+            $.ajax({
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                url: pet,
+                type: 'delete',
+                success: function(){
+                    $(`#airline-${id}`).remove()
+                }
+            })
+        });
+    });
+</script>
+
 </html>

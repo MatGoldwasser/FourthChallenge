@@ -102,6 +102,8 @@ class AirlineController extends Controller
     public function destroy(Airline $airline)
     {
         $airline->delete();
-        return redirect('/airlines')->with('success', 'The city has been deleted');
+        return response()->json(['respuesta'=>0]);
+
+
     }
 }
