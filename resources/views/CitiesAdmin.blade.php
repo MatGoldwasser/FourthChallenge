@@ -23,21 +23,22 @@
         @foreach($cities as $city)
             <tr id="city-{{$city->id}}">
                 <td>{{$city->id}}</td>
+
                 <form method='POST' action="/cities/{{$city->id}}">
-                    <!-- tengo que hacer que cuando haga click le saque el readonly y le haga un post del nombre para editar -->
                     @csrf
                     @method('PUT')
                     <td>
-                        <input type="text" id="input-{{$loop->index}}" name="name" value="{{$city->name}}"
-                               class="bg-red-200" readonly> <!-- readonly -->
+                        <input type="text" id="input-{{$city->id}}" name="name" value="{{$city->name}}"
+                               class="bg-red-200" readonly>
 
-                        <button type="submit" id="button-{{$loop->index}}"
-                                class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600"
-                                hidden> <!-- hidden -->
+                        <button type="submit" id="button-{{$city->id}}"
+                                class="onUpdate bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600"
+                                hidden>
                             Submit
                         </button>
                     </td>
                 </form>
+
                 <td>Aca tengo que mostrar cantidad de vuelos que llegan</td>
                 <td>Aca tengo que mostrar cantidad de vuelos que salen</td>
                 <td class="px-6">
@@ -47,7 +48,7 @@
                             Eliminar
                         </button>
 
-                    <button name="Editar" type="button" onclick="editarNombre({{$loop->index}})" id="{{$city->id}}"
+                    <button name="Editar" type="button" onclick="editarNombre({{$city->id}})" id="{{$city->id}}"
                             class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
                         Editar
                     </button>
@@ -84,7 +85,33 @@
 </body>
 
 <script>
+    function editarNombre(fila){
+        document.getElementById(`input-${fila}`).readOnly = false;
+        document.getElementById(`button-${fila}`).hidden = false;
+    }
+
     $(document).ready(function () {
+
+        $(".onUpdate").click(function (e){
+            const id = (this.id).split('-')[1];
+            const pet = `/cities/${id}`;
+            e.preventDefault();
+            $.ajax({
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "name": $(`#input-${id}`).val()
+                },
+                url: pet,
+                type: 'put',
+                success: function(res){
+                    $(`#input-${id}`).prop('readonly',true);
+                    $(`#button-${id}`).hide();
+                    $(`#input-${id}`).val(res.name);
+                }
+            })
+        })
+
+
         $(".onDelete").click(function (e) {
             const id = (this.id).split('-')[2];
             const pet = `/cities/${id}`;
