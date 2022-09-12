@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Airline;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -78,7 +79,7 @@ class AirlineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Airline $airline, Request $request): RedirectResponse
+    public function update(Airline $airline, Request $request): JsonResponse
     {
         $request->validate([
             'name' => ['required', Rule::unique('airlines','name')->ignore($airline)],
@@ -90,7 +91,8 @@ class AirlineController extends Controller
             'description' => $request->input('description')
         ]);
 
-        return redirect('/airlines')->with('success', 'The city has been edited');
+        return response()->json(['name'=>$airline->name,
+                                 'description'=>$airline->description]);
     }
 
     /**
@@ -102,6 +104,8 @@ class AirlineController extends Controller
     public function destroy(Airline $airline)
     {
         $airline->delete();
-        return redirect('/airlines')->with('success', 'The city has been deleted');
+        return response()->json(['respuesta'=>0]);
+
+
     }
 }

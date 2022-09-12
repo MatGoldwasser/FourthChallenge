@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class CityController extends Controller
@@ -28,17 +30,17 @@ class CityController extends Controller
     }
 
 
-    public function update(City $city, Request $request): RedirectResponse
+    public function update(City $city, Request $request): JsonResponse
     {
         $request->validate([
-            'name' => 'required|unique:cities,name'
+            'name' => ['required', Rule::unique('cities','name')->ignore($city)]
         ]);
 
         $city->update([
-            'name' => $request->input('name')
+            'name' => $request->name
         ]);
 
-        return redirect('/cities')->with('success', 'The city has been edited');
+        return response()->json(['name'=>$city->name]);
     }
 
     /**
@@ -50,6 +52,6 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         $city->delete();
-        return redirect('/cities')->with('success', 'The city has been deleted');
+        return response()->json(['respuesta'=>0]);
     }
 }
