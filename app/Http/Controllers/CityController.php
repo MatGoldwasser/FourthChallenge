@@ -40,7 +40,7 @@ class CityController extends Controller
             'name' => $request->name
         ]);
 
-        return response()->json(['name'=>$city->name]); //esto no lo esta agarrando
+        return response()->json(['name'=>$city->name]);
     }
 
     /**

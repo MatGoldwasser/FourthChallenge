@@ -31,14 +31,14 @@
                         @csrf
                         @method('PUT')
                         <td>
-                            <input type="text" id="name-{{$loop->index}}" name="name" value="{{$airline->name}}"
+                            <input type="text" id="name-{{$airline->id}}" name="name" value="{{$airline->name}}"
                                    class="bg-red-200" readonly>
 
-                            <input id="description-{{$loop->index}}" name="description" value="{{$airline->description}}"
+                            <input id="description-{{$airline->id}}" name="description" value="{{$airline->description}}"
                                    class="bg-red-200" readonly>
 
-                            <button type="submit" id="button-{{$loop->index}}"
-                                    class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600"
+                            <button type="submit" id="button-{{$airline->id}}"
+                                    class="onUpdate bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600"
                                     hidden>
                                 Submit
                             </button>
@@ -56,7 +56,7 @@
                     </td>
 
                     <td>
-                        <button name="Editar" type="button"  id="edit-button-{{$airline->id}}"
+                        <button name="Editar" type="button"  id="edit-button-{{$airline->id}}" onclick="editar({{$airline->id}})"
                                 class="bg-red-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
                             Editar
                         </button>
@@ -93,7 +93,36 @@
 
 <script>
 
+    function editar(fila){
+        document.getElementById(`name-${fila}`).readOnly = false;
+        document.getElementById(`description-${fila}`).readOnly = false;
+        document.getElementById(`button-${fila}`).hidden = false;
+    }
+
     $(document).ready(function () {
+
+        $(".onUpdate").click(function (e){
+            const id = (this.id).split('-')[1];
+            const pet = `/airlines/${id}`;
+            e.preventDefault();
+            $.ajax({
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "name": $(`#name-${id}`).val(),
+                    "description": $(`#description-${id}`).val()
+                },
+                url: pet,
+                type: 'put',
+                success: function(res){
+                    $(`#name-${id}`).prop('readonly',true);
+                    $(`#description-${id}`).prop('readonly',true);
+                    $(`#button-${id}`).hide();
+                    $(`#name-${id}`).val(res.name);
+                    $(`#description-${id}`).val(res.description);
+                }
+            })
+        })
+
         $(".onDelete").click(function (e) {
             const id = (this.id).split('-')[2];
             const pet = `/airlines/${id}`;
