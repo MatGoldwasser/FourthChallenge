@@ -49,7 +49,7 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(City $city)
+    public function destroy(City $city):JsonResponse
     {
         $city->delete();
         return response()->json(['respuesta'=>0]);
