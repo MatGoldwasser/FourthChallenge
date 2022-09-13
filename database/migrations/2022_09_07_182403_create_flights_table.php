@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Airline;
 use App\Models\City;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,8 +18,8 @@ return new class extends Migration
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Airline::class, 'airline');
-            $table->foreignIdFor(City::class, 'origin_id');
-            $table->foreignIdFor(City::class, 'arrival_id');
+            $table->foreignIdFor(City::class, 'origin');
+            $table->foreignIdFor(City::class, 'arrival');
             $table->dateTime('takeoff_time');
             $table->dateTime('arrival_time');
             $table->timestamps();

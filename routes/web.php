@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\FlightController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,5 @@ Route::get('/', function () {
 Route::resource('cities', CityController::class);
 
 Route::resource('airlines', AirlineController::class);
+
+Route::resource('flights',FlightController::class);
