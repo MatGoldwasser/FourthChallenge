@@ -38,7 +38,7 @@ class AirlineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
     {
         $attributes = $request->validate([
             'name' => 'required|unique:airlines,name',
@@ -101,7 +101,7 @@ class AirlineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Airline $airline)
+    public function destroy(Airline $airline):JsonResponse
     {
         $airline->delete();
         return response()->json(['respuesta'=>0]);
